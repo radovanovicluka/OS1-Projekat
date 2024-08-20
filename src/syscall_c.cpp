@@ -81,6 +81,8 @@ extern "C" void handleSupervisorTrap() {
                 __asm__ volatile ( "mv %0, a1" : "=r"(thread) );
 
                 TCB::start( thread );
+
+                break;
             }
             // thread_no_start
             case 0x15: {
@@ -261,7 +263,7 @@ int thread_no_start ( thread_t* handle, void ( *start_routine ) ( void* ), void*
     __asm__ volatile ( "mv a4, %0" : : "r"( stack ) );
     __asm__ volatile ( "mv a2, %0" : : "r"( start_routine ) );
     __asm__ volatile ( "mv a1, %0" : : "r"( handle ) );
-    __asm__ volatile ( "li a0, 0x11" );
+    __asm__ volatile ( "li a0, 0x15" );
 
     __asm__ volatile ( "ecall" );
 
@@ -290,7 +292,7 @@ void thread_dispatch() {
 
 void thread_start( TCB* thread ) {
     __asm__ volatile ( "mv a1, %0" : : "r"(thread) );
-    __asm__ volatile ( "li a0, 0x13" );
+    __asm__ volatile ( "li a0, 0x14" );
 
     __asm__ volatile ( "ecall" );
 }
