@@ -50,9 +50,9 @@ Semaphore::~Semaphore() {
 }
 
 char Console::getc() {
-    return getc();
+    return ::getc();
 }
 
 void Console::putc(char c) {
-    putc(c);
+    ::putc(c);
 }
